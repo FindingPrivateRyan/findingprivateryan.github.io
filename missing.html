@@ -29,6 +29,30 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <!-- VUE.js libraries -->
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-moment@4.0.0"></script>
+<!-- Firebase libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+<!-- <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-analytics.js"></script> -->
+<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-storage.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-firestore@0.3.22"></script>
+<script>
+// Your web app's Firebase configuration
+var firebaseConfig = {
+	apiKey: "AIzaSyCCck3qekiA_x8iZYU3FLWUVlHw-HA4oOU",
+	authDomain: "findingprivateryan.firebaseapp.com",
+	databaseURL: "https://findingprivateryan.firebaseio.com",
+	projectId: "findingprivateryan",
+	storageBucket: "findingprivateryan.appspot.com",
+	messagingSenderId: "977622455120",
+	appId: "1:977622455120:web:28a162a4d1bf21c064d255"
+};
+// Initialize Firebase
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+
+</script>
         <style>
             .bd-placeholder-img {
                 font-size: 1.125rem;
@@ -72,7 +96,7 @@
 	<nav class="nav d-flex justify-content-between">
 		<a class="p-2 text-muted" href="/mission.html" >成立目的</a>
 		<a class="p-2 text-muted" href="/missing.html"  style="color: #dd232e!important;font-weight: 700" >失蹤人口</a>
-		<a class="p-2 text-muted" href="/law.html" >認清法規</a>
+		<a class="p-2 text-muted" href="/regulations.html" >認清法規</a>
 		<a class="p-2 text-muted" href="/help.html" >尋求協助</a>
 		<a class="p-2 text-muted" href="/news.html" >最新消息</a>
 		<a class="p-2 text-muted" href="/review.html" >每月回顧</a>
@@ -94,7 +118,7 @@
 				<div class="form-row">
 					<div class="form-group col-md-4">
 						<label for="search_name">名字</label>
-						<input v-model.trim="m_name" v-on:keyup="filter" type="test" maxlength="50" class="form-control" id="search_name" placeholder="名字、暱稱">
+						<input v-model.trim="m_name" v-on:keyup="filter" type="text" maxlength="50" class="form-control" id="search_name" placeholder="名字、暱稱">
 					</div>
 					<div class="form-group col-md-4">
 						<label for="search_gender">姓別</label>
@@ -123,7 +147,7 @@
 			<button v-on:click="resetFilter">重設</button>
 		</div>
 
-		<wanted-notice
+		<wanted-notice v-if="!this.isError"
 			v-for="item in wantedList"
 			v-bind:wanted = "item"
 			v-bind:key = "item.id"
@@ -131,6 +155,10 @@
 			v-bind:matched = "item.matched"
 		>
 		</wanted-notice>
+
+		<div v-if="this.isError">
+			未能讀取資料
+		</div>
 	</div>
 </div>
 
@@ -139,7 +167,7 @@
 		delimiters: ['%{', '}'],
 		props: [ 'wanted', "matched" ],
 		template: `
-<div class="col-md-6" v-if="matched">
+<div class="col-md-6" v-if="matched && !wanted.isFound">
 	<div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
 		<div class="col p-4 d-flex flex-column position-static">
 			<strong class="d-inline-block mb-2 text-primary">失蹤人士</strong>
@@ -148,7 +176,9 @@
 			<div class="mb-1 text-muted"><span v-if="wanted.gender != '-'">%{wanted.gender}</span><span v-else>性別不詳</span> <span v-if="wanted.age > 0">%{wanted.age}</span><span v-else>年齡不詳</span></div>
 			<div class="mb-1 text-muted">%{wanted.date}</div>
 			<p class="card-text mb-auto">%{wanted.description}</p>
-			<a href="#" class="stretched-link text-muted">測試中，資料虛構。</a>
+			<a v-if="wanted.source != '-' && wanted.source_url != '-'" :href="wanted.source_url" target="_blank" class="text-muted">來源: %{wanted.source}</a>
+			<div v-else-if="wanted.source != '-' && wanted.source_url == '-'" class="text-muted">來源: %{wanted.source}</div>
+			<a href="#" class="text-muted">測試中，資料虛構。</a>
 		</div>
 		<div class="col-auto d-none d-lg-block">
 			<svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">近照 200 x 250</text></svg>
@@ -160,50 +190,70 @@
 </div>`
 	})
 
-
 	var app = new Vue({
 		el: '#missingList',
 		data : {
+			isError: false,
 			m_name:'',
 			m_gender:'ALL',
 			m_age_range:'ALL',
 			m_age_range_min: 0,
 			m_age_range_max: 120,
-			wantedList: [
-				{ matched: true, id:1, gender: "M", age: 35, name: '陳大文', date: '2047 年 12 月 6 日', description: '五大訴求 缺一不可' },
-				{ matched: true, id:2, gender: "F", age: 17, name: '周文', date: '2047 年 1 月 7 日', description: '五大訴求 缺一不可' },
-				{ matched: true, id:3, gender: "M", age: 46, name: 'David LEE Kit Ming', date: '2048 年 8 月 8 日', description: '五大訴求 缺一不可' },
-				{ matched: true, id:4, gender: "-", age: 0,  name: '張英', date: '2050 年 2 月 9 日', description: '五大訴求 缺一不可' },
-				{ matched: true, id:5, gender: "F", age: 70, name: '黃九妹', date: '2049 年 5 月 10 日', description: '五大訴求 缺一不可' },
-				{ matched: true, id:6, gender: "M", age: 11, name: '-', date: '2046 年 11 月 11 日', description: '五大訴求 缺一不可' }
-			]
+			matched_no: 0,
+			wantedList: []
 		},
-		computed: {
-			matched_no: function (){
-				c = 0;
-				this.wantedList.map ( function (v, k) {
-					if (v.matched)
-						c++;
-				});
-				console.log(c + " records matched.");
-				return c;
-			}
+		mounted: function () {
+			this.$nextTick(function () {
+				this.loadData();
+			});
 		},
 		methods: {
+			loadData: function() {
+				try {
+					this.$http.get('/data/wanted.json?' + new Date().getTime() ).then( response => {
+						this.wantedList = response.data;
+						if (Array.isArray(this.wantedList)){
+							this.wantedList.map( function ( v, k ){
+								v.matched = true;
+								return v;
+							}); 
+							this.filter();
+						} else {
+							this.isError = true;
+							console.log('Fail to load data');							
+						}
+					}, response => {
+						this.isError = true;
+						console.log('Fail to load data');
+					});	
+				} catch (error) {
+					console.log (error);
+					this.isError = true;
+				}
+			},
 			filter: function (){
+				this.matched_no = 0;
 				return this.wantedList.map( function (wanted) {
-					wanted.matched = true;
-					if (this.m_name != "" && wanted.name != "-" && !wanted.name.toUpperCase().includes(this.m_name.toUpperCase())){
-						wanted.matched &= false
-					}
-					if (this.m_gender != "ALL" && wanted.gender != "-" && wanted.gender != this.m_gender){
-						wanted.matched &= false
-					}
-					if (this.m_age_range != "ALL" && wanted.age != 0 && ( wanted.age < this.m_age_range_min || wanted.age > this.m_age_range_max ) ){
-						wanted.matched &= false
+					if ( !wanted.isFound) {
+						wanted.matched = true;
+						if (this.m_gender != "ALL" && wanted.gender != "-" && wanted.gender != this.m_gender){
+							wanted.matched = false
+						}
+						if (wanted.matched && this.m_age_range != "ALL" && wanted.age != 0 && ( wanted.age < this.m_age_range_min || wanted.age > this.m_age_range_max ) ){
+							wanted.matched = false
+						}
+						if (wanted.matched && this.m_name != "" && wanted.name != "-" && !wanted.name.toUpperCase().includes(this.m_name.toUpperCase())){
+							wanted.matched = false
+						}
+						if (wanted.matched){
+							this.matched_no++;
+						}
+					} else {
+						// Exclude isFound
 					}
 					return wanted
 				}.bind(this))
+				console.log(this.matched_no + " records matched.");
 			},
 			updateAgeRange: function(){
 				ranges = (this.m_age_range == 'ALL' ? [0,120] : this.m_age_range.split("_"));
