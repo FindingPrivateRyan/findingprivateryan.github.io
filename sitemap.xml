@@ -1,157 +1,172 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-
-
-<url>
-<loc>/aboutus.html</loc>
-
-<lastmod>2019-12-31T04:30:09+08:00</lastmod>
-
-
-<changefreq>monthly</changefreq>
-
-
-<priority>0.3</priority>
-
-</url>
-
-
-
-<url>
-<loc>/help.html</loc>
-
-<lastmod>2019-12-31T04:30:09+08:00</lastmod>
-
-
-<changefreq>monthly</changefreq>
-
-
-<priority>0.3</priority>
-
-</url>
-
-
-
-<url>
-<loc>/</loc>
-
-<lastmod>2019-12-31T04:30:09+08:00</lastmod>
-
-
-<changefreq>monthly</changefreq>
-
-
-<priority>0.3</priority>
-
-</url>
-
-
-
-<url>
-<loc>/missing.html</loc>
-
-<lastmod>2019-12-31T04:30:09+08:00</lastmod>
-
-
-<changefreq>monthly</changefreq>
-
-
-<priority>0.3</priority>
-
-</url>
-
-
-
-<url>
-<loc>/mission.html</loc>
-
-<lastmod>2019-12-31T04:30:09+08:00</lastmod>
-
-
-<changefreq>monthly</changefreq>
-
-
-<priority>0.3</priority>
-
-</url>
-
-
-
-<url>
-<loc>/news.html</loc>
-
-<lastmod>2019-12-31T04:30:09+08:00</lastmod>
-
-
-<changefreq>monthly</changefreq>
-
-
-<priority>0.3</priority>
-
-</url>
-
-
-
-<url>
-<loc>/regulations.html</loc>
-
-<lastmod>2019-12-31T04:30:09+08:00</lastmod>
-
-
-<changefreq>monthly</changefreq>
-
-
-<priority>0.3</priority>
-
-</url>
-
-
-
-<url>
-<loc>/review.html</loc>
-
-<lastmod>2019-12-31T04:30:09+08:00</lastmod>
-
-
-<changefreq>monthly</changefreq>
-
-
-<priority>0.3</priority>
-
-</url>
-
-
-
-
-
-<url>
-<loc>/regulations/under_arrest.html</loc>
-
-<lastmod>2019-12-31T04:30:09+08:00</lastmod>
-
-
-<changefreq>monthly</changefreq>
-
-
-<priority>0.3</priority>
-
-</url>
-
-
-
-<url>
-<loc>/regulations/under_construction.html</loc>
-
-<lastmod>2019-12-31T04:30:09+08:00</lastmod>
-
-
-<changefreq>monthly</changefreq>
-
-
-<priority>0.3</priority>
-
-</url>
-
-
+  
+  
+    
+    <url>
+      <loc>/aboutus.html</loc>
+      
+        <lastmod>2020-01-04T02:40:49+08:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/regulations/arrest_search_and_detention.html</loc>
+      
+        <lastmod>2020-01-04T02:40:49+08:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/help.html</loc>
+      
+        <lastmod>2020-01-04T02:40:49+08:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/</loc>
+      
+        <lastmod>2020-01-04T02:40:49+08:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/missing.html</loc>
+      
+        <lastmod>2020-01-04T02:40:49+08:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/mission.html</loc>
+      
+        <lastmod>2020-01-04T02:40:49+08:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/news.html</loc>
+      
+        <lastmod>2020-01-04T02:40:49+08:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/regulations.html</loc>
+      
+        <lastmod>2020-01-04T02:40:49+08:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/review.html</loc>
+      
+        <lastmod>2020-01-04T02:40:49+08:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+  
+    
+    <url>
+      <loc>/regulations/under_arrest.html</loc>
+      
+        <lastmod>2020-01-04T02:40:49+08:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
+    
+    <url>
+      <loc>/regulations/under_construction.html</loc>
+      
+        <lastmod>2020-01-04T02:40:49+08:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.3</priority>
+      
+    </url>
+    
+  
 </urlset>
