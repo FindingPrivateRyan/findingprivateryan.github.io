@@ -176,17 +176,26 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 			<h3 class="mb-0" v-if="wanted.name != '-'">%{wanted.name}</h3>
 			<h3 class="mb-0" v-else>姓名不詳</h3>
 			<div class="mb-1 text-muted"><span v-if="wanted.gender != '-'">%{wanted.gender}</span><span v-else>性別不詳</span> <span v-if="wanted.age > 0">%{wanted.age}</span><span v-else>年齡不詳</span></div>
-			<div class="mb-1 text-muted">%{wanted.date}</div>
+			<div class="mb-1 text-muted">
+	  			<span v-if="wanted.year == '-' || wanted.year == ''" class=""> - 年</span>
+	  			<span v-else class="">%{wanted.year} 年</span>
+	  			<span v-if="wanted.month == '-' || wanted.month == ''" class=""> - 月</span>
+	  			<span v-else class="">%{wanted.month} 月</span>
+	  			<span v-if="wanted.day == '-' || wanted.day == ''" class=""> - 日</span>
+	  			<span v-else class="">%{wanted.day} 日 </span>
+			</div>
 			<p class="card-text mb-auto">%{wanted.description}</p>
 			<a v-if="wanted.source != '-' && wanted.source_url != '-'" :href="wanted.source_url" target="_blank" class="text-muted">來源: %{wanted.source}</a>
 			<div v-else-if="wanted.source != '-' && wanted.source_url == '-'" class="text-muted">來源: %{wanted.source}</div>
-			<a href="#" class="text-muted">測試中，資料虛構。</a>
+			<p class="card-text mb-auto"><span v-for="tag in wanted.tags" class="badge badge-info">%{tag}</span></p>
 		</div>
 		<div class="col-auto d-none d-lg-block">
-			<svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">近照 200 x 250</text></svg>
+			<img v-if="wanted.image_src && wanted.image_src != ''" :src="wanted.image_src" class="img-fluid" style="width:200px"/>
+			<svg v-else class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">近照 200 x 250</text></svg>
 		</div>
 		<div class="col-auto d-lg-none">
-			<svg class="bd-placeholder-img" width="100" height="125" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">近照縮圖</text></svg>
+			<img v-if="wanted.image_src && wanted.image_src != ''" :src="wanted.image_src" class="img-fluid" style="width:100px"/>
+			<svg v-else class="bd-placeholder-img" width="100" height="125" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">近照縮圖</text></svg>
 		</div>
 	</div>
 </div>`
